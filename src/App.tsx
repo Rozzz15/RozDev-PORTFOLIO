@@ -493,7 +493,7 @@ const projects = [
 const experience = [
   {
     role: "Freelance Web & Mobile Developer",
-    dates: "2025 - Present",
+    dates: "2024 - Present",
     focus:
       "Solving operational problems through digital tools, websites, automations, and structured customer workflows.",
   },
@@ -583,7 +583,7 @@ function HeroSection() {
   const scale = useTransform(scrollY, [0, 600], [1, 0.95]);
 
   return (
-    <section id="home" className="relative h-[300vh]">
+    <section id="home" className="relative h-[200vh] md:h-[300vh]">
       <div className="absolute inset-0 z-0">
         <HeroParallax products={heroProducts} />
       </div>
@@ -629,7 +629,7 @@ function HeroSection() {
             initial={{ opacity: 0, y: 40, scale: 0.98 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             transition={{ duration: 1, delay: 0.15, ease: "easeOut" }}
-            className="relative mx-auto h-[48vh] min-h-[420px] w-full max-w-[520px] self-end lg:h-[78vh] group pointer-events-auto"
+            className="relative mx-auto h-[40vh] min-h-[320px] w-full max-w-[520px] self-end md:h-[48vh] md:min-h-[420px] lg:h-[78vh] group pointer-events-auto"
           >
             <div className="absolute inset-x-8 bottom-0 top-12 border border-[#745D4B]/55" />
             <div className="absolute inset-x-0 bottom-0 top-0 bg-[#3E3025]/30 shadow-2xl shadow-black/40" />
@@ -666,73 +666,56 @@ function HeroSection() {
 
 function AboutSection() {
   return (
-    <section id="about" className="bg-[#1c1a17] overflow-hidden">
-      <div className="mx-auto max-w-[1600px] px-8 py-16 lg:h-screen lg:px-12 lg:py-0">
-        <div className="grid h-full items-center gap-10 lg:grid-cols-[2fr_3fr] lg:gap-0">
-          {/* Left Column — Text */}
-          <div className="flex flex-col justify-center">
-            <motion.p
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, ease: "easeOut" }}
-              className="text-sm font-bold uppercase tracking-[2px] text-[#A78873]"
-            >
-              Web Dev
-            </motion.p>
+    <section id="about" className="relative bg-[#1c1a17] overflow-hidden">
+      {/* Portrait — positioned behind text, floating right */}
+      <motion.div
+        initial={{ opacity: 0, x: 40 }}
+        whileInView={{ opacity: 1, x: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.7, delay: 0.15, ease: "easeOut" }}
+        className="absolute right-0 top-0 bottom-0 flex items-end justify-end opacity-30 md:opacity-100"
+      >
+        <img
+          src="/images/about.png"
+          alt="Rozel O. Ramos — About"
+          className="h-[60vh] w-auto object-contain object-bottom md:h-[100vh] lg:h-[110vh] -translate-x-[5%]"
+          loading="lazy"
+        />
+      </motion.div>
 
-            <motion.h2
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: 0.1, ease: "easeOut" }}
-              className="mt-4 font-[family-name:var(--font-bebas)] text-[clamp(5rem,15vw,13rem)] font-bold uppercase leading-[0.85] text-[#F5F2EE]"
-            >
-              About
-              <br />
-              Me
-            </motion.h2>
-
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: 0.2, ease: "easeOut" }}
-              className="mt-8 max-w-[600px]"
-            >
-              <p className="text-base leading-[1.6] text-[rgba(245,242,238,0.75)] lg:text-lg">
-                Virtual Assistant, Admissions Assistant, and Freelance Web Developer with 2+
-                years of professional experience supporting administrative operations,
-                admissions services, and digital transformation projects. As a Freelance Web
-                Developer since 2024, has successfully completed numerous client projects,
-                delivering modern, responsive websites and professional portfolios with a
-                strong emphasis on performance, usability, and visual appeal.
-              </p>
-              <p className="mt-5 text-base leading-[1.6] text-[rgba(245,242,238,0.75)] lg:text-lg">
-                Proficient in admissions support, document and records management, data
-                entry, email and calendar management, client communication, website
-                development, mobile portfolio creation, and IT support. Combines technical
-                expertise with exceptional organizational and problem-solving skills to
-                consistently deliver efficient workflows, successful project outcomes, and
-                high client satisfaction.
-              </p>
-            </motion.div>
-          </div>
-
-          {/* Right Column — Portrait */}
-          <motion.div
-            initial={{ opacity: 0, x: 40 }}
-            whileInView={{ opacity: 1, x: 0 }}
+      {/* Text — floats on top of the image */}
+      <div className="relative z-10 mx-auto max-w-[1600px] px-4 py-16 lg:h-screen lg:px-6 lg:py-0">
+        <div className="flex h-full flex-col justify-center">
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.7, delay: 0.15, ease: "easeOut" }}
-            className="relative flex h-full items-end justify-center lg:justify-end"
+            transition={{ duration: 0.6, ease: "easeOut" }}
+            className="text-base font-bold uppercase tracking-[2px] text-[#A78873] lg:text-lg"
           >
-            <img
-              src="/images/about.png"
-              alt="Rozel O. Ramos — About"
-              className="h-[80vh] w-auto object-contain object-bottom lg:h-[110vh]"
-              loading="lazy"
-            />
+            Web Dev
+          </motion.p>
+
+          <motion.h2
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.1, ease: "easeOut" }}
+            className="mt-4 font-[family-name:var(--font-bebas)] text-[clamp(7rem,22vw,20rem)] font-bold uppercase leading-[0.85] text-[#F5F2EE] sm:whitespace-nowrap"
+          >
+            About Me
+          </motion.h2>
+
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.2, ease: "easeOut" }}
+            className="mt-8 max-w-[900px]"
+          >
+            <p className="text-lg leading-[1.6] text-justify text-[rgba(245,242,238,0.75)] lg:text-xl">
+              Virtual Assistant, Admissions Assistant, and Freelance Web Developer with 2+ years of professional experience supporting administrative operations, admissions services, and digital transformation projects. As a Freelance Web Developer since 2024, has successfully completed numerous client projects, delivering modern, responsive websites and professional portfolio solutions with a strong emphasis on performance, usability, and visual appeal. Proficient in admissions support, document and records management, data entry, email and calendar management, client communication, website development, mobile portfolio creation, and IT support. Combines technical expertise with exceptional organizational and problem-solving skills to consistently deliver efficient workflows, successful project outcomes, and high client satisfaction.
+            </p>
           </motion.div>
         </div>
       </div>
@@ -922,7 +905,7 @@ function ProjectsSection() {
                 </button>
               </div>
 
-              <div className="px-8 py-8 md:px-12 md:py-10">
+              <div className="px-5 py-6 sm:px-8 sm:py-8 md:px-12 md:py-10">
                 <div className="flex flex-wrap items-start justify-between gap-6">
                   <div className="flex-1 min-w-0">
                     <span className="text-xs font-medium uppercase tracking-[0.2em] text-[#A78873]">
@@ -1396,7 +1379,7 @@ function ContactSection() {
             coneSpread={25}
           >
             <form
-              className="relative p-8 md:p-10"
+              className="relative p-5 sm:p-8 md:p-10"
               onSubmit={handleSubmit}
             >
               <div className="mb-8">

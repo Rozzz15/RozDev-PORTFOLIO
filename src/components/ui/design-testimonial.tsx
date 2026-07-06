@@ -65,7 +65,7 @@ export function Testimonial() {
       <div ref={containerRef} className="relative w-full max-w-6xl mx-auto px-5 lg:px-8" onMouseMove={handleMouseMove}>
         {/* Oversized index number */}
         <motion.div
-          className="absolute -left-8 top-1/2 -translate-y-1/2 text-[28rem] font-bold text-[#A78873]/[0.04] select-none pointer-events-none leading-none tracking-tighter"
+          className="absolute -left-8 top-1/2 -translate-y-1/2 text-[12rem] sm:text-[20rem] md:text-[28rem] font-bold text-[#A78873]/[0.04] select-none pointer-events-none leading-none tracking-tighter"
           style={{ x: numberX, y: numberY }}
         >
           <AnimatePresence mode="wait">
