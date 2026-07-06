@@ -1,0 +1,368 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Geist", "Inter", system-ui, sans-serif;
+  --font-bebas: "Bebas Neue", sans-serif;
+}
+
+html {
+  scroll-behavior: smooth;
+  background: #171614;
+}
+
+body {
+  margin: 0;
+  background: #171614;
+  color: #f5f2ee;
+  font-family: "Geist", "Inter", system-ui, sans-serif;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+}
+
+button,
+a,
+input,
+textarea {
+  font: inherit;
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+@keyframes gradient-rotate {
+  from {
+    --gradient-angle: 0deg;
+  }
+  to {
+    --gradient-angle: 360deg;
+  }
+}
+
+@property --gradient-angle {
+  syntax: "<angle>";
+  initial-value: 0deg;
+  inherits: false;
+}
+
+.gradient-border-component {
+  position: relative;
+  overflow: hidden;
+}
+
+.gradient-border-auto {
+  animation: gradient-rotate var(--animation-duration, 5s) linear infinite;
+}
+
+.gradient-border-hover {
+  animation: gradient-rotate var(--animation-duration, 5s) linear infinite;
+  animation-play-state: paused;
+}
+
+.gradient-border-hover:hover {
+  animation-play-state: running;
+}
+
+.gradient-border-stop-hover {
+  animation: gradient-rotate var(--animation-duration, 5s) linear infinite;
+}
+
+.gradient-border-stop-hover:hover {
+  animation-play-state: paused;
+}
+
+/* Kinetic Navigation */
+.site-header-wrapper {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 50;
+  border-bottom: 1px solid rgba(245, 242, 238, 0.08);
+  background: rgba(23, 22, 20, 0.8);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+}
+
+.header {
+  width: 100%;
+}
+
+.container.is--full {
+  width: 100%;
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 1.25rem;
+}
+
+@media (min-width: 1024px) {
+  .container.is--full {
+    padding-left: 2rem;
+    padding-right: 2rem;
+  }
+}
+
+.nav-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.nav-logo-row.w-inline-block {
+  display: inline-block;
+  text-decoration: none;
+  line-height: 1;
+  color: #F5F2EE;
+  font-size: 0.875rem;
+  font-weight: 600;
+  letter-spacing: 0.28em;
+}
+
+.nav-logo-row.w-inline-block span {
+  display: block;
+}
+
+.nav-logo-row.w-inline-block .logo-sub {
+  font-size: 0.75rem;
+  font-weight: 400;
+  letter-spacing: normal;
+  color: rgba(245, 242, 238, 0.5);
+  margin-top: 0.125rem;
+}
+
+.nav-row__right {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.nav-toggle-label {
+  display: none;
+  cursor: pointer;
+  user-select: none;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  color: rgba(245, 242, 238, 0.4);
+  transition: color 0.2s ease;
+  line-height: 1;
+}
+
+.nav-toggle-label:hover {
+  color: #A78873;
+}
+
+@media (min-width: 1024px) {
+  .nav-toggle-label {
+    display: inline;
+  }
+}
+
+.nav-close-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  background: none;
+  border: none;
+  padding: 0;
+  font-size: 0.875rem;
+  color: #F5F2EE;
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+
+.nav-close-btn:hover {
+  color: #A78873;
+}
+
+.menu-button-text {
+  overflow: hidden;
+  height: 0.75rem;
+}
+
+.p-large {
+  margin: 0;
+  line-height: 1;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+}
+
+.icon-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 1rem;
+  height: 1rem;
+}
+
+.menu-button-icon {
+  width: 16px;
+  height: 16px;
+}
+
+/* ── Fullscreen Menu ── */
+
+.fullscreen-menu-container {
+  position: fixed;
+  inset: 0;
+  z-index: 40;
+  pointer-events: none;
+}
+
+.nav-overlay-wrapper {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 40;
+  pointer-events: auto;
+}
+
+.overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to left, #171614 680px, transparent 800px);
+  opacity: 0;
+  pointer-events: none;
+}
+
+.menu-content {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.menu-bg {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+}
+
+.backdrop-layer {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 560px;
+  right: 0;
+  z-index: 3;
+  background: #3d3832;
+}
+
+.backdrop-layer.first { right: 120px; z-index: 1; background: #25221e; }
+.backdrop-layer.second { right: 40px; z-index: 2; background: #312d28; }
+
+.ambient-background-shapes {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.bg-shape {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+
+.bg-shape.active {
+  opacity: 1;
+}
+
+.shape-element {
+  transform-origin: center;
+}
+
+.menu-content-wrapper {
+  position: relative;
+  z-index: 10;
+  padding: 6rem 4rem;
+  text-align: right;
+}
+
+.menu-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.menu-list-item {
+  overflow: hidden;
+  position: relative;
+}
+
+.nav-link.w-inline-block {
+  display: block;
+  position: relative;
+  text-decoration: none;
+  padding: 0.25em 0;
+  text-align: right;
+  z-index: 1;
+}
+
+.nav-link-text {
+  position: relative;
+  z-index: 1;
+  margin: 0;
+  font-size: clamp(2.5rem, 6vw, 5rem);
+  font-weight: 700;
+  letter-spacing: -0.04em;
+  color: #F5F2EE;
+  transition: color 0.3s ease;
+}
+
+.menu-list-item:hover .nav-link-text {
+  color: #A78873;
+}
+
+.nav-link-hover-bg {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  width: 600px;
+  background: rgba(167, 136, 115, 0.12);
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform 0.4s cubic-bezier(0.65, 0.05, 0, 1);
+}
+
+.menu-list-item:hover .nav-link-hover-bg {
+  transform: scaleX(1);
+}
+
+@media (max-width: 1024px) {
+  .menu-content-wrapper {
+    padding: 5rem 2rem;
+  }
+}
+
+@media (max-width: 640px) {
+  .menu-content-wrapper {
+    padding: 5rem 1.5rem;
+  }
+  .nav-link-text {
+    font-size: clamp(2rem, 10vw, 3rem);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

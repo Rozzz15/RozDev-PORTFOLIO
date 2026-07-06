@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>All Projects | Rozel O. Ramos</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { background: #171614; color: #F5F2EE; font-family: "Inter", system-ui, -apple-system, sans-serif; }
+    .container { max-width: 1280px; margin: 0 auto; padding: 2rem 1.25rem; }
+    header { padding: 2rem 0; border-bottom: 1px solid rgba(245,242,238,0.08); }
+    h1 { font-size: 3rem; font-weight: 600; letter-spacing: -0.045em; }
+    .subtitle { color: rgba(245,242,238,0.6); margin-top: 0.5rem; }
+    .filters { display: flex; gap: 0.75rem; overflow-x: auto; padding: 1.5rem 0; -ms-overflow-style: none; scrollbar-width: none; }
+    .filters::-webkit-scrollbar { display: none; }
+    .filter-btn { white-space: nowrap; padding: 0.5rem 1.25rem; font-size: 0.875rem; font-weight: 300; letter-spacing: 0.05em; background: transparent; color: rgba(245,242,238,0.3); cursor: pointer; transition: color 0.3s; border: none; font-family: inherit; }
+    .filter-btn:hover { color: rgba(245,242,238,0.6); }
+    .filter-btn.active { color: #F5F2EE; }
+    .grid { display: grid; grid-template-columns: repeat(1, 1fr); gap: 2rem; margin-top: 2rem; }
+    @media (min-width: 640px) { .grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (min-width: 1024px) { .grid { grid-template-columns: repeat(3, 1fr); } }
+    .card { cursor: pointer; transition: opacity 0.3s; }
+    .card:hover { opacity: 0.85; }
+    .card-image-wrap { overflow: hidden; background: rgba(245,242,238,0.02); }
+    .card-image { aspect-ratio: 4/3; width: 100%; object-fit: cover; display: block; transition: transform 0.7s; }
+    .card:hover .card-image { transform: scale(1.05); }
+    .card-category { display: block; font-size: 0.6875rem; font-weight: 300; letter-spacing: 0.25em; text-transform: uppercase; color: rgba(167,136,115,0.6); margin-top: 1rem; }
+    .card-title { font-size: 1rem; font-weight: 500; margin-top: 0.25rem; color: #F5F2EE; }
+    .back-link { display: inline-flex; align-items: center; gap: 0.5rem; color: #A78873; text-decoration: none; font-size: 0.875rem; margin-bottom: 1.5rem; transition: color 0.3s; }
+    .back-link:hover { color: #F5F2EE; }
+    .search-wrapper { padding: 1rem 0 0; }
+    .search-input { width: 100%; padding: 0.75rem 1rem; font-size: 0.875rem; background: #211c18; border: 1px solid rgba(245,242,238,0.1); color: #F5F2EE; font-family: inherit; outline: none; transition: border-color 0.3s; }
+    .search-input::placeholder { color: rgba(245,242,238,0.3); }
+    .search-input:focus { border-color: #A78873; }
+    .modal-overlay { position: fixed; inset: 0; z-index: 100; background: rgba(0,0,0,0.8); display: none; }
+    .modal-overlay.open { display: block; }
+    .modal { position: fixed; inset: 2rem 1.25rem; z-index: 101; max-width: 56rem; margin: 0 auto; background: #171614; max-height: calc(100vh - 4rem); overflow-y: auto; display: none; }
+    .modal.open { display: block; }
+    .modal-media { position: relative; background: #0f0e0c; }
+    .modal-media video, .modal-media img { width: 100%; aspect-ratio: 16/9; object-fit: cover; display: block; }
+    .modal-close { position: absolute; right: 1rem; top: 1rem; width: 2rem; height: 2rem; display: flex; align-items: center; justify-content: center; background: rgba(0,0,0,0.7); color: rgba(245,242,238,0.6); border: none; cursor: pointer; transition: background 0.2s, color 0.2s; font-size: 1.25rem; }
+    .modal-close:hover { background: #A78873; color: #171614; }
+    .modal-body { padding: 2rem 1.5rem; }
+    @media (min-width: 768px) { .modal-body { padding: 2.5rem 3rem; } }
+    .modal-header { display: flex; flex-wrap: wrap; align-items: flex-start; justify-content: space-between; gap: 1.5rem; }
+    .modal-category { font-size: 0.75rem; font-weight: 500; letter-spacing: 0.2em; text-transform: uppercase; color: #A78873; }
+    .modal-title { margin-top: 0.5rem; font-size: 1.5rem; font-weight: 600; color: #F5F2EE; }
+    @media (min-width: 768px) { .modal-title { font-size: 1.875rem; } }
+    .modal-launch { display: inline-flex; align-items: center; gap: 0.5rem; border: 1px solid #A78873; padding: 0.75rem 1.25rem; font-size: 0.75rem; font-weight: 500; letter-spacing: 0.15em; text-transform: uppercase; color: #F5F2EE; text-decoration: none; transition: background 0.2s, color 0.2s; white-space: nowrap; }
+    .modal-launch:hover { background: #A78873; color: #171614; }
+    .modal-details { display: grid; gap: 2rem; margin-top: 2rem; }
+    @media (min-width: 768px) { .modal-details { grid-template-columns: 1fr 1.5fr; } }
+    .modal-label { font-size: 0.625rem; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(245,242,238,0.25); }
+    .modal-tags { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 0.5rem; }
+    .modal-tag { border: 1px solid rgba(167,136,115,0.25); background: rgba(167,136,115,0.08); padding: 0.25rem 0.75rem; font-size: 0.75rem; font-weight: 500; color: rgba(245,242,238,0.75); }
+    .modal-desc { margin-top: 0.5rem; font-size: 0.875rem; line-height: 1.75; color: rgba(245,242,238,0.65); }
+    .modal-gallery { margin-top: 2.5rem; border-top: 1px solid rgba(245,242,238,0.08); padding-top: 2rem; }
+    .modal-gallery-label { font-size: 0.75rem; font-weight: 500; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(245,242,238,0.3); margin-bottom: 1.25rem; }
+    .modal-gallery-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.75rem; }
+    @media (min-width: 640px) { .modal-gallery-grid { grid-template-columns: repeat(3, 1fr); } }
+    @media (min-width: 768px) { .modal-gallery-grid { grid-template-columns: repeat(4, 1fr); } }
+    .modal-gallery-grid img { width: 100%; aspect-ratio: 4/3; object-fit: cover; cursor: pointer; transition: opacity 0.2s; background: rgba(245,242,238,0.03); }
+    .modal-gallery-grid img:hover { opacity: 0.9; }
+    .lightbox { position: fixed; inset: 0; z-index: 200; background: rgba(0,0,0,0.9); display: none; align-items: center; justify-content: center; padding: 1rem; }
+    @media (min-width: 768px) { .lightbox { padding: 2.5rem; } }
+    .lightbox.open { display: flex; }
+    .lightbox img { max-width: 100%; max-height: 100%; object-fit: contain; cursor: pointer; }
+    .lightbox-btn { position: absolute; top: 50%; transform: translateY(-50%); width: 3.5rem; height: 3.5rem; display: flex; align-items: center; justify-content: center; background: rgba(0,0,0,0.8); color: rgba(245,242,238,0.9); border: 1px solid rgba(245,242,238,0.2); cursor: pointer; transition: background 0.2s, color 0.2s; }
+    .lightbox-btn:hover { background: #A78873; color: #171614; }
+    .lightbox-prev { left: 1rem; }
+    .lightbox-next { right: 1rem; }
+    @media (min-width: 768px) { .lightbox-prev { left: 2.5rem; } .lightbox-next { right: 2.5rem; } }
+    .lightbox-close { position: absolute; right: 1rem; top: 1rem; width: 2rem; height: 2rem; display: flex; align-items: center; justify-content: center; background: rgba(0,0,0,0.7); color: rgba(245,242,238,0.6); border: none; cursor: pointer; transition: background 0.2s, color 0.2s; font-size: 1.25rem; z-index: 201; }
+    .lightbox-close:hover { background: #A78873; color: #171614; }
+    .target-cursor-wrapper { position: fixed; top: 0; left: 0; width: 0; height: 0; pointer-events: none; z-index: 9999; mix-blend-mode: difference; }
+    .target-cursor-dot { position: absolute; left: 50%; top: 50%; width: 4px; height: 4px; background: #fff; border-radius: 50%; transform: translate(-50%, -50%); will-change: transform; }
+    .target-cursor-corner { position: absolute; left: 50%; top: 50%; width: 12px; height: 12px; border: 3px solid #fff; will-change: transform; }
+    .corner-tl { transform: translate(-150%, -150%); border-right: none; border-bottom: none; }
+    .corner-tr { transform: translate(50%, -150%); border-left: none; border-bottom: none; }
+    .corner-br { transform: translate(50%, 50%); border-left: none; border-top: none; }
+    .corner-bl { transform: translate(-150%, 50%); border-right: none; border-top: none; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <a href="#" onclick="history.back(); return false;" class="back-link cursor-target">← Back to Home</a>
+    <header>
+      <h1>All Projects</h1>
+      <p class="subtitle">Complete collection of projects I've built</p>
+    </header>
+    <div class="search-wrapper">
+      <input type="text" id="searchInput" class="search-input cursor-target" placeholder="Search projects..." oninput="handleSearch()" />
+    </div>
+    <div class="filters" id="filters"></div>
+    <div class="grid" id="grid"></div>
+  </div>
+
+  <div class="modal-overlay" id="modalOverlay"></div>
+  <div class="modal" id="modal">
+    <div class="modal-media" id="modalMedia" onmouseenter="this.querySelector('video') && (this.querySelector('video').controls=true)" onmouseleave="this.querySelector('video') && (this.querySelector('video').controls=false)">
+      <button class="modal-close cursor-target" onclick="closeModal()">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="modal-header">
+        <div>
+          <span class="modal-category" id="modalCategory"></span>
+          <h3 class="modal-title" id="modalTitle"></h3>
+        </div>
+        <a class="modal-launch cursor-target" id="modalLaunch" target="_blank" rel="noopener noreferrer">
+          Launch <span>→</span>
+        </a>
+      </div>
+      <div class="modal-details">
+        <div>
+          <p class="modal-label">Stack</p>
+          <div class="modal-tags" id="modalTags"></div>
+        </div>
+        <div>
+          <p class="modal-label">Overview</p>
+          <p class="modal-desc" id="modalDesc"></p>
+        </div>
+      </div>
+      <div class="modal-gallery" id="modalGallery">
+        <p class="modal-gallery-label" id="modalGalleryLabel"></p>
+        <div class="modal-gallery-grid" id="modalGalleryGrid"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="target-cursor-wrapper" id="cursor">
+    <div class="target-cursor-dot" id="cursorDot"></div>
+    <div class="target-cursor-corner corner-tl" id="cornerTl"></div>
+    <div class="target-cursor-corner corner-tr" id="cornerTr"></div>
+    <div class="target-cursor-corner corner-br" id="cornerBr"></div>
+    <div class="target-cursor-corner corner-bl" id="cornerBl"></div>
+  </div>
+
+  <div class="lightbox" id="lightbox" onclick="closeLightbox()">
+    <button class="lightbox-close cursor-target" onclick="closeLightbox()">✕</button>
+    <button class="lightbox-btn lightbox-prev cursor-target" onclick="event.stopPropagation();navLightbox(-1)">
+      <svg width="24" height="24" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/></svg>
+    </button>
+    <img id="lightboxImg" onclick="event.stopPropagation()" draggable="false" oncontextmenu="return false" />
+    <button class="lightbox-btn lightbox-next cursor-target" onclick="event.stopPropagation();navLightbox(1)">
+      <svg width="24" height="24" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
+    </button>
+  </div>
+
+  <script>
+    const projects = [
+      { title: "181 Lounge Coffee Shop", description: "A complete restaurant and lounge website featuring menu showcases, gallery, online presence, and brand identity for 181 Lounge Coffee Shop.", url: "https://www.181lounge.com/", category: "Websites", tags: ["Restaurant", "Web Design", "Branding", "Gallery"], image: "/images/181.png", gallery: ["/images/181a.png","/images/181b.png","/images/181c.png","/images/181d.png","/images/181e.png","/images/181f.png","/images/181g.png","/images/181h.png"], video: "/videos/181.mp4" },
+      { title: "Eyir Clinic Website", description: "A complete clinic website featuring service showcases, online presence, and brand identity for Eyir Clinic.", url: "https://eyirclinicwebsite.netlify.app/", category: "Websites", tags: ["Clinic", "Web Design", "Healthcare", "Branding"], image: "/images/eyir1.png", gallery: ["/images/eyir1.png","/images/eyir2.png","/images/eyir3.png","/images/eyir4.png","/images/eyir5.png","/images/eyir6.png"], video: "/videos/eyir-clinic-tour.mp4" },
+      { title: "Louise Freedom Portfolio Website", description: "A personal portfolio website showcasing creative projects, skills, and design work with a modern, responsive interface.", url: "https://louisefreedomportfolio.netlify.app/", category: "Web Portfolio", tags: ["Portfolio", "Web Design", "Frontend", "Creative"], image: "/images/louise.png", gallery: ["/images/louise.png","/images/louise1.png","/images/louise2.png","/images/louise3.png","/images/louise4.png","/images/louise5.png"], video: "/videos/louise.mp4" },
+      { title: "Jenefer's Portfolio Website", description: "A personal portfolio website showcasing work, skills, and creative projects with a clean, modern design.", url: "https://jeneferuson.netlify.app/", category: "Web Portfolio", tags: ["Portfolio", "Web Design", "Frontend", "Creative"], image: "/images/jen1.png", gallery: ["/images/jen1.png","/images/jen2.png","/images/jen3.png","/images/jen4.png","/images/jen5.png","/images/jen6.png","/images/jen7.png","/images/jen8.png"], video: "/videos/jen_opt.mp4" },
+      { title: "Jas's Portfolio Website", description: "A personal portfolio website showcasing creative work, skills, and projects with a modern and elegant design.", url: "https://jassportfoliova.netlify.app/", category: "Web Portfolio", tags: ["Portfolio", "Web Design", "Frontend", "Creative"], image: "/images/jas.png", gallery: ["/images/jas.png","/images/jas2.png","/images/jas3.png","/images/jas4.png","/images/jas5.png","/images/jas6.png","/images/jas7.png"], video: "/videos/jasmine_opt.mp4" },
+      { title: "Aries America's Portfolio Website", description: "A sleek personal portfolio website showcasing creative projects, skills, and experiences with a modern UI.", url: "https://ariesamericaportfolio.netlify.app/", category: "Web Portfolio", tags: ["Portfolio", "Web Design", "Frontend", "Creative"], image: "/images/ar.png", gallery: ["/images/ar.png","/images/ar1.png","/images/ar2.png","/images/ar3.png","/images/ar4.png","/images/ar5.png","/images/ar6.png"], video: "/videos/ar_opt.mp4" },
+      { title: "Machrislyn Villanueva's Portfolio Website", description: "A creative personal portfolio website showcasing skills, projects, and design work with a polished interface.", url: "https://machrislynvillanuevaportfolio.netlify.app/", category: "Web Portfolio", tags: ["Portfolio", "Web Design", "Frontend", "Creative"], image: "/images/ma.png", gallery: ["/images/ma.png","/images/ma1.png","/images/ma2.png","/images/ma3.png","/images/ma4.png"], video: "/videos/ma_opt.mp4" },
+      { title: "Kai Zacedral's Portfolio Website", description: "A personal portfolio website showcasing creative projects, skills, and design work with a modern, responsive interface.", url: "https://kaizacatedralportfolio.netlify.app/", category: "Web Portfolio", tags: ["Portfolio", "Web Design", "Frontend", "Creative"], image: "/images/kai1.png", gallery: ["/images/kai1.png","/images/kai2.png","/images/kai3.png","/images/kai4.png","/images/kai5.png","/images/kai6.png"], video: "/videos/kai.mp4" },
+      { title: "Cas Portfolio Website", description: "A personal portfolio website showcasing projects, skills, and creative work with a modern, responsive design.", url: "https://casporfolio.netlify.app/", category: "Web Portfolio", tags: ["Portfolio", "Web Design", "Frontend", "Creative"], image: "/images/cas.png", gallery: ["/images/cas.png","/images/cas1.png","/images/cas2.png","/images/cas3.png","/images/cas4.png","/images/cas5.png","/images/cas6.png"], video: "/videos/cas.mp4" },
+      { title: "NJ Bania's Portfolio Website", description: "A personal portfolio website showcasing projects, skills, and experience with a modern, responsive design and interactive UI.", url: "https://njbaniasportfolio.netlify.app/", category: "Web Portfolio", tags: ["Portfolio", "Web Design", "Frontend", "Responsive"], image: "/images/nj.png", gallery: ["/images/nj.png","/images/nj1.png","/images/nj2.png","/images/nj3.png","/images/nj4.png","/images/nj5.png","/images/nj6.png"], video: "/videos/nj_opt2.mp4" },
+      { title: "Roman Eros Portfolio Website", description: "A personal portfolio website showcasing creative projects, skills, and design work with a modern, responsive interface.", url: "https://romanerosportfolio.netlify.app/", category: "Web Portfolio", tags: ["Portfolio", "Web Design", "Frontend", "Creative"], image: "/images/eros.png", gallery: ["/images/eros.png","/images/eros1.png","/images/eros2.png","/images/eros3.png","/images/eros4.png"], video: "/videos/eros.mp4" },
+      { title: "Justin Salvador Portfolio Website", description: "A personal portfolio website showcasing creative projects, skills, and design work with a modern, responsive interface.", url: "https://justinsalvadorportfolio.netlify.app/", category: "Web Portfolio", tags: ["Portfolio", "Web Design", "Frontend", "Creative"], image: "/images/jus.png", gallery: ["/images/jus.png","/images/jus1.png","/images/jus2.png","/images/jus3.png","/images/jus4.png","/images/jus5.png","/images/jus6.png"], video: "/videos/jus.mp4" },
+      { title: "Jake Castro Portfolio Website", description: "A personal portfolio website showcasing creative projects, skills, and design work with a modern, responsive interface.", url: "https://jakecastroportfolio.netlify.app/", category: "Web Portfolio", tags: ["Portfolio", "Web Design", "Frontend", "Creative"], image: "/images/jake.png", gallery: ["/images/jake.png","/images/jake1.png","/images/jake2.png","/images/jake3.png","/images/jake4.png"], video: "/videos/jake.mp4" },
+      { title: "Javerick Arcenio Portfolio Website", description: "A personal portfolio website showcasing creative projects, skills, and design work with a modern, responsive interface.", url: "https://javerickarcenioportfolio.netlify.app/", category: "Web Portfolio", tags: ["Portfolio", "Web Design", "Frontend", "Creative"], image: "/images/jav.png", gallery: ["/images/jav.png","/images/jav1.png","/images/jav2.png","/images/jav3.png","/images/jav4.png","/images/jav5.png","/images/jav6.png"], video: "/videos/jav.mp4" },
+      { title: "Monica Portfolio Website", description: "A personal portfolio website showcasing creative projects, skills, and design work with a modern, responsive interface.", url: "https://monicaaa.netlify.app/", category: "Web Portfolio", tags: ["Portfolio", "Web Design", "Frontend", "Creative"], image: "/images/mon1.png", gallery: ["/images/mon1.png","/images/mon2.png","/images/mon3.png","/images/mon4.png","/images/mon5.png","/images/mon6.png"], video: "/videos/mon.mp4" },
+      { title: "Babybella Santos Portfolio Website", description: "A personal portfolio website showcasing creative projects, skills, and design work with a modern, responsive interface.", url: "https://babybellasantosportfolio.netlify.app/", category: "Web Portfolio", tags: ["Portfolio", "Web Design", "Frontend", "Creative"], image: "/images/bab.png", gallery: ["/images/bab.png","/images/bab1.png","/images/bab2.png","/images/bab3.png","/images/bab4.png"], video: "/videos/bab.mp4" },
+      { title: "Christine Mae Valencia Portfolio Website", description: "A personal portfolio website showcasing creative projects, skills, and design work with a modern, responsive interface.", url: "https://christinemaevalenciaportfolio.netlify.app/", category: "Web Portfolio", tags: ["Portfolio", "Web Design", "Frontend", "Creative"], image: "/images/ch.png", gallery: ["/images/ch.png","/images/ch1.png","/images/ch2.png","/images/ch3.png","/images/ch4.png","/images/ch5.png","/images/ch6.png"], video: "/videos/ch.mp4" },
+      { title: "Chen Prencess Portfolio Website", description: "A personal portfolio website showcasing creative projects, skills, and design work with a modern, responsive interface.", url: "https://chenprencessportfolio.netlify.app/", category: "Web Portfolio", tags: ["Portfolio", "Web Design", "Frontend", "Creative"], image: "/images/chen.png", gallery: ["/images/chen.png","/images/chen1.png","/images/chen2.png","/images/chen3.png","/images/chen4.png","/images/chen5.png"], video: "/videos/chen.mp4" },
+      { title: "Patrick David Rosario Portfolio Website", description: "A personal portfolio website showcasing creative projects, skills, and design work with a modern, responsive interface.", url: "https://patrickdavidrosario.netlify.app/", category: "Web Portfolio", tags: ["Portfolio", "Web Design", "Frontend", "Creative"], image: "/images/pat1.png", gallery: ["/images/pat1.png","/images/pat2.png","/images/pat3.png","/images/pat4.png","/images/pat5.png","/images/pat6.png"], video: "/videos/patrick.mp4" },
+      { title: "Vincent Carl Matucabe Portfolio Website", description: "A personal portfolio website showcasing creative projects, skills, and design work with a modern, responsive interface.", url: "https://vincentcarlmatucabe.netlify.app/", category: "Web Portfolio", tags: ["Portfolio", "Web Design", "Frontend", "Creative"], image: "/images/vin1.png", gallery: ["/images/vin1.png","/images/vin2.png","/images/vin3.png","/images/vin4.png","/images/vin5.png"], video: "/videos/vincent.mp4" },
+      { title: "Duyanan Restaurant Website", description: "A complete restaurant website featuring menu showcases, gallery, online presence, and brand identity for Duyanan Restaurant.", url: "https://duyananrestaurant.netlify.app/", category: "Websites", tags: ["Restaurant", "Web Design", "Branding", "Gallery"], image: "/images/duyan1.png", gallery: ["/images/duyan1.png","/images/duyan2.png","/images/duyan3.png","/images/duyan4.png","/images/duyan5.png","/images/duyan6.png","/images/duyan7.png","/images/duyan8.png"], video: "/videos/Duyanan.mp4" },
+      { title: "Kainan sa Garahe Restaurant Website", description: "A complete restaurant and event venue website featuring menu showcases, gallery, online presence, and brand identity for Kainan sa Garahe.", url: "https://kainansagaraherestu.netlify.app/", category: "Websites", tags: ["Restaurant", "Web Design", "Branding", "Gallery"], image: "/images/ksg.png", gallery: ["/images/ksg.png","/images/ksg1.png","/images/ksg2.png","/images/ksg3.png","/images/ksg4.png","/images/ksg5.png"], video: "/videos/KSG.mp4" },
+      { title: "Manong Gadget Store", description: "A complete e-commerce website for gadget sales featuring product showcases, catalog browsing, and online presence for Manong Gadget Store.", url: "https://manonggadgetstore.netlify.app/", category: "Websites", tags: ["E-commerce", "Web Design", "Gadgets", "Online Store"], image: "/images/manong.png", gallery: ["/images/manong.png","/images/manong1.png","/images/manong2.png","/images/manong3.png","/images/manong4.png","/images/manong5.png"], video: "/videos/manong.mp4" },
+      { title: "Jlad Samgyup", description: "A complete restaurant website for a samgyupsal place featuring menu showcases, gallery, online presence, and brand identity for Jlad Samgyup.", url: "https://jladsamgyup.netlify.app/", category: "Websites", tags: ["Restaurant", "Web Design", "Menu", "Branding"], image: "/images/jlad.png", gallery: ["/images/jlad.png","/images/jlad1.png","/images/jlad2.png","/images/jlad3.png","/images/jlad4.png","/images/jlad5.png","/images/jlad6.png"], video: "/videos/jlad.mp4" },
+      { title: "EyirPOS System", description: "A point-of-sale system design with a clean and modern UI for retail transactions.", url: "#", category: "Graphics Design", tags: ["POS", "UI Design", "Graphics", "Retail"], image: "/images/s2.png", video: "/videos/EyirPOS.mp4" },
+      { title: "Customer Journey Automation", description: "Mapped and automated the entire customer journey from first touchpoint to repeat engagement and retention.", url: "#", category: "Mobile App", tags: ["Customer Journey", "CRM", "Email Automation"], image: "/images/s2.png" },
+    ];
+
+    const categories = ["All", "Websites", "Web Portfolio", "Web Invitation", "Mobile App", "Custom Games", "Graphics Design", "Video Editing"];
+
+    let activeCategory = "All";
+    let searchQuery = "";
+
+    function renderFilters() {
+      const filtersEl = document.getElementById("filters");
+      filtersEl.innerHTML = categories.map(cat =>
+        `<button class="filter-btn cursor-target ${cat === activeCategory ? 'active' : ''}" onclick="filterProjects('${cat}')">${cat}</button>`
+      ).join("");
+    }
+
+    function handleSearch() {
+      searchQuery = document.getElementById("searchInput").value.toLowerCase();
+      renderProjects();
+    }
+
+    function renderProjects() {
+      const grid = document.getElementById("grid");
+      const filtered = projects.filter(p => {
+        const matchCategory = activeCategory === "All" || p.category === activeCategory;
+        const matchSearch = !searchQuery || p.title.toLowerCase().includes(searchQuery) || p.tags.some(t => t.toLowerCase().includes(searchQuery));
+        return matchCategory && matchSearch;
+      });
+      grid.innerHTML = filtered.map((p, i) => {
+        var thumb = p.video
+          ? '<video src="' + p.video + '" autoplay loop muted playsInline preload="auto" draggable="false" oncontextmenu="return false" class="card-image"></video>'
+          : '<img src="' + p.image + '" alt="' + p.title + '" class="card-image" draggable="false" oncontextmenu="return false" onerror="this.style.display=\'none\'">';
+        return '<div class="card cursor-target" onclick="openProject(' + i + ')">' +
+          '<div class="card-image-wrap">' + thumb + '</div>' +
+          '<span class="card-category">' + p.category + '</span>' +
+          '<h3 class="card-title">' + p.title + '</h3>' +
+        '</div>';
+      }).join("");
+    }
+
+    let currentProject = null;
+
+    function openProject(index) {
+      const filtered = getFilteredProjects();
+      currentProject = filtered[index];
+      if (!currentProject) return;
+
+      document.getElementById("modalOverlay").classList.add("open");
+      document.getElementById("modal").classList.add("open");
+      document.body.style.overflow = "hidden";
+
+      const mediaEl = document.getElementById("modalMedia");
+      const closeBtn = '<button class="modal-close" onclick="closeModal()">✕</button>';
+      if (currentProject.video) {
+        mediaEl.innerHTML = '<video src="' + currentProject.video + '" autoplay loop muted playsInline preload="auto" controlsList="nodownload" oncontextmenu="return false" draggable="false" style="width:100%;max-height:80vh;object-fit:contain;display:block;background:#000"></video>' + closeBtn;
+      } else {
+        mediaEl.innerHTML = '<img src="' + currentProject.image + '" alt="' + currentProject.title + '" draggable="false" oncontextmenu="return false" style="width:100%;aspect-ratio:16/9;object-fit:cover;display:block" />' + closeBtn;
+      }
+
+      document.getElementById("modalCategory").textContent = currentProject.category;
+      document.getElementById("modalTitle").textContent = currentProject.title;
+
+      const launchEl = document.getElementById("modalLaunch");
+      launchEl.href = currentProject.url;
+      launchEl.style.display = currentProject.url && currentProject.url !== "#" ? "inline-flex" : "none";
+
+      document.getElementById("modalTags").innerHTML = currentProject.tags.map(function(t) { return '<span class="modal-tag">' + t + '</span>'; }).join("");
+      document.getElementById("modalDesc").textContent = currentProject.description;
+
+      const hasGallery = currentProject.gallery && currentProject.gallery.length > 0;
+      document.getElementById("modalGallery").style.display = hasGallery ? "block" : "none";
+      if (hasGallery) {
+        document.getElementById("modalGalleryLabel").textContent = "Gallery (" + currentProject.gallery.length + ")";
+        var html = "";
+        for (var g = 0; g < currentProject.gallery.length; g++) {
+          html += '<img class="cursor-target" src="' + currentProject.gallery[g] + '" draggable="false" oncontextmenu="return false" onclick="openLightbox(' + g + ')">';
+        }
+        document.getElementById("modalGalleryGrid").innerHTML = html;
+      }
+    }
+
+    function closeModal() {
+      document.getElementById("modalOverlay").classList.remove("open");
+      document.getElementById("modal").classList.remove("open");
+      document.body.style.overflow = "";
+      var video = document.querySelector("#modalMedia video");
+      if (video) video.pause();
+      currentProject = null;
+    }
+
+    document.getElementById("modalOverlay").addEventListener("click", closeModal);
+
+    function openLightbox(index) {
+      if (!currentProject || !currentProject.gallery) return;
+      document.getElementById("lightbox").classList.add("open");
+      document.getElementById("lightboxImg").src = currentProject.gallery[index];
+      document.getElementById("lightboxImg").setAttribute("data-index", index);
+    }
+
+    function closeLightbox() {
+      document.getElementById("lightbox").classList.remove("open");
+    }
+
+    function navLightbox(dir) {
+      if (!currentProject || !currentProject.gallery) return;
+      var img = document.getElementById("lightboxImg");
+      var i = parseInt(img.getAttribute("data-index")) || 0;
+      var len = currentProject.gallery.length;
+      i = (i + dir + len) % len;
+      img.src = currentProject.gallery[i];
+      img.setAttribute("data-index", i);
+    }
+
+    function getFilteredProjects() {
+      return projects.filter(p => {
+        const matchCategory = activeCategory === "All" || p.category === activeCategory;
+        const matchSearch = !searchQuery || p.title.toLowerCase().includes(searchQuery) || p.tags.some(t => t.toLowerCase().includes(searchQuery));
+        return matchCategory && matchSearch;
+      });
+    }
+
+    function filterProjects(category) {
+      activeCategory = category;
+      renderFilters();
+      renderProjects();
+    }
+
+    var isMobile = 'ontouchstart' in window || navigator.maxTouchPoints > 0 || window.innerWidth <= 768;
+    if (!isMobile && typeof gsap !== 'undefined') {
+      document.body.style.cursor = 'none';
+      var cursor = document.getElementById('cursor');
+      var corners = [document.getElementById('cornerTl'), document.getElementById('cornerTr'), document.getElementById('cornerBr'), document.getElementById('cornerBl')];
+      var dot = document.getElementById('cursorDot');
+      var targetSelector = '.cursor-target';
+      var activeTarget = null;
+      var spinTl = null;
+      var cornerPositions = null;
+      var activeStrength = { current: 0 };
+      var tickerFn = null;
+
+      gsap.set(cursor, { xPercent: -50, yPercent: -50, x: window.innerWidth / 2, y: window.innerHeight / 2 });
+
+      spinTl = gsap.timeline({ repeat: -1 }).to(cursor, { rotation: '+=360', duration: 2, ease: 'none' });
+
+      tickerFn = function() {
+        if (!cornerPositions || !cursor) return;
+        var strength = activeStrength.current;
+        if (strength === 0) return;
+        var cursorX = gsap.getProperty(cursor, 'x');
+        var cursorY = gsap.getProperty(cursor, 'y');
+        for (var i = 0; i < 4; i++) {
+          var cx = gsap.getProperty(corners[i], 'x');
+          var cy = gsap.getProperty(corners[i], 'y');
+          var tx = cornerPositions[i].x - cursorX;
+          var ty = cornerPositions[i].y - cursorY;
+          gsap.to(corners[i], { x: cx + (tx - cx) * strength, y: cy + (ty - cy) * strength, duration: 0.05, overwrite: 'auto' });
+        }
+      };
+
+      document.addEventListener('mousemove', function(e) {
+        gsap.to(cursor, { x: e.clientX, y: e.clientY, duration: 0.1, ease: 'power3.out' });
+      });
+
+      document.addEventListener('mouseover', function(e) {
+        var target = e.target.closest(targetSelector);
+        if (!target || !cursor) return;
+        if (target === activeTarget) return;
+        if (activeTarget) {
+          var old = activeTarget;
+          var handler = old._leaveHandler;
+          if (handler) old.removeEventListener('mouseleave', handler);
+        }
+        activeTarget = target;
+        for (var i = 0; i < 4; i++) gsap.killTweensOf(corners[i], 'x,y');
+        gsap.killTweensOf(cursor, 'rotation');
+        if (spinTl) spinTl.pause();
+        gsap.set(cursor, { rotation: 0 });
+
+        var r = target.getBoundingClientRect();
+        var bw = 3, cs = 12;
+        cornerPositions = [
+          { x: r.left - bw, y: r.top - bw },
+          { x: r.right + bw - cs, y: r.top - bw },
+          { x: r.right + bw - cs, y: r.bottom + bw - cs },
+          { x: r.left - bw, y: r.bottom + bw - cs }
+        ];
+
+        gsap.ticker.add(tickerFn);
+        gsap.to(activeStrength, { current: 1, duration: 0.2, ease: 'power2.out' });
+
+        var cx = gsap.getProperty(cursor, 'x');
+        var cy = gsap.getProperty(cursor, 'y');
+        for (var i = 0; i < 4; i++) {
+          gsap.to(corners[i], { x: cornerPositions[i].x - cx, y: cornerPositions[i].y - cy, duration: 0.2, ease: 'power2.out' });
+        }
+
+        var leaveHandler = function() {
+          gsap.ticker.remove(tickerFn);
+          activeTarget = null;
+          cornerPositions = null;
+          gsap.set(activeStrength, { current: 0, overwrite: true });
+          for (var i = 0; i < 4; i++) gsap.killTweensOf(corners[i], 'x,y');
+          var pos = [
+            { x: -cs * 1.5, y: -cs * 1.5 },
+            { x: cs * 0.5, y: -cs * 1.5 },
+            { x: cs * 0.5, y: cs * 0.5 },
+            { x: -cs * 1.5, y: cs * 0.5 }
+          ];
+          for (var i = 0; i < 4; i++) gsap.to(corners[i], { x: pos[i].x, y: pos[i].y, duration: 0.3, ease: 'power3.out' });
+          setTimeout(function() {
+            if (!activeTarget && cursor && spinTl) {
+              var r2 = gsap.getProperty(cursor, 'rotation') % 360;
+              spinTl.kill();
+              spinTl = gsap.timeline({ repeat: -1 }).to(cursor, { rotation: '+=360', duration: 2, ease: 'none' });
+              gsap.to(cursor, { rotation: r2 + 360, duration: 2 * (1 - r2 / 360), ease: 'none', onComplete: function() { spinTl.restart(); } });
+            }
+          }, 50);
+          target.removeEventListener('mouseleave', leaveHandler);
+        };
+
+        target._leaveHandler = leaveHandler;
+        target.addEventListener('mouseleave', leaveHandler);
+      });
+
+      document.addEventListener('mousedown', function() {
+        gsap.to(dot, { scale: 0.7, duration: 0.3 });
+        gsap.to(cursor, { scale: 0.9, duration: 0.2 });
+      });
+      document.addEventListener('mouseup', function() {
+        gsap.to(dot, { scale: 1, duration: 0.3 });
+        gsap.to(cursor, { scale: 1, duration: 0.2 });
+      });
+    }
+
+    const params = new URLSearchParams(window.location.search);
+    const categoryParam = params.get("category");
+    if (categoryParam && categories.includes(categoryParam)) {
+      activeCategory = categoryParam;
+    }
+
+    renderFilters();
+    renderProjects();
+  </script>
+</body>
+</html>

@@ -1,0 +1,16 @@
+{
+  "name": "Rozel O. Ramos | Digital Systems Architect",
+  "short_name": "Rozel Ramos",
+  "description": "Digital Systems Architect helping businesses streamline operations, automate workflows, and build scalable digital infrastructure.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#171614",
+  "theme_color": "#A78873",
+  "icons": [
+    {
+      "src": "/favicon.ico",
+      "sizes": "64x64",
+      "type": "image/x-icon"
+    }
+  ]
+}
