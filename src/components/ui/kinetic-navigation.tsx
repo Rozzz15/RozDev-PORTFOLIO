@@ -8,6 +8,7 @@ if (typeof window !== "undefined") {
 
 const navLinks = [
   { label: "Home", href: "#home", shape: "1" },
+  { label: "About", href: "#about", shape: "5" },
   { label: "Projects", href: "#projects", shape: "2" },
   { label: "Experience", href: "#experience", shape: "3" },
   { label: "Contact", href: "#contact", shape: "4" },

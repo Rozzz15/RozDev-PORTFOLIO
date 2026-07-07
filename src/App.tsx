@@ -13,6 +13,7 @@ import { FloatingPaths } from "@/components/ui/background-paths";
 import BorderGlow from "@/components/ui/border-glow";
 import TubesCursor from "@/components/ui/tubes-cursor";
 import { Footer } from "@/components/ui/modem-animated-footer";
+import ScrollFloat from "@/components/ui/ScrollFloat";
 import { Testimonial } from "@/components/ui/design-testimonial";
 
 const categories = [
@@ -488,6 +489,24 @@ const projects = [
     image: "",
     video: "/videos/EyirPOS.mp4",
   },
+  {
+    title: "Dana Fashion",
+    description:
+      "A complete fashion website showcasing collections, style gallery, online presence, and brand identity for Dana Fashion.",
+    url: "https://danafashion.netlify.app/",
+    category: "Websites",
+    tags: ["Fashion", "Web Design", "Branding", "Gallery"],
+    image: "/images/da.png",
+    gallery: [
+      "/images/da.png",
+      "/images/da1.png",
+      "/images/da2.png",
+      "/images/da3.png",
+      "/images/da4.png",
+      "/images/da5.png",
+    ],
+    video: "/videos/dana.mp4",
+  },
 ];
 
 const experience = [
@@ -536,6 +555,7 @@ const heroProducts = [
   { title: "Chen Prencess", link: "https://chenprencessportfolio.netlify.app/", thumbnail: "/images/chen.png" },
   { title: "Patrick David", link: "https://patrickdavidrosario.netlify.app/", thumbnail: "/images/pat1.png" },
   { title: "Vincent Carl", link: "https://vincentcarlmatucabe.netlify.app/", thumbnail: "/images/vin1.png" },
+  { title: "Dana Fashion", link: "https://danafashion.netlify.app/", thumbnail: "/images/da.png" },
 ];
 
 const fadeUpVariants = {
@@ -629,30 +649,39 @@ function HeroSection() {
             initial={{ opacity: 0, y: 40, scale: 0.98 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             transition={{ duration: 1, delay: 0.15, ease: "easeOut" }}
-            className="relative mx-auto h-[40vh] min-h-[320px] w-full max-w-[520px] self-end md:h-[48vh] md:min-h-[420px] lg:h-[78vh] group pointer-events-auto"
+            className="relative mx-auto h-[40vh] min-h-[280px] w-full max-w-[520px] self-end sm:h-[48vh] sm:min-h-[420px] lg:h-[78vh] group pointer-events-auto"
           >
             <div className="absolute inset-x-8 bottom-0 top-12 border border-[#745D4B]/55" />
-            <div className="absolute inset-x-0 bottom-0 top-0 bg-[#3E3025]/30 shadow-2xl shadow-black/40" />
-            <BorderGlow
-              backgroundColor="transparent"
-              borderRadius={0}
-              glowColor="40 80 80"
-              colors={["#A78873", "#c084fc", "#f472b6"]}
-              edgeSensitivity={20}
-              glowRadius={20}
-              glowIntensity={0.5}
-              coneSpread={30}
-              className="absolute inset-0 h-full w-full"
-            >
-              <img
-                src="/images/hero.png"
-                alt="Rozel O. Ramos, Digital Systems Architect"
-                className="flex-1 min-h-0 w-full object-cover object-center mix-blend-luminosity group-hover:mix-blend-normal transition-all duration-500"
-                loading="eager"
-              />
-            </BorderGlow>
-            <div className="absolute inset-0 bg-gradient-to-t from-[#171614] via-transparent to-transparent opacity-100 group-hover:opacity-0 transition-opacity duration-500 pointer-events-none" />
-            <div className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-[#171614] to-transparent opacity-100 group-hover:opacity-0 transition-opacity duration-500 pointer-events-none" />
+            {/* BorderGlow wrapper on desktop only; plain img on mobile */}
+            <div className="hidden sm:block absolute inset-0 h-full w-full">
+              <BorderGlow
+                backgroundColor="transparent"
+                borderRadius={0}
+                glowColor="40 80 80"
+                colors={["#A78873", "#c084fc", "#f472b6"]}
+                edgeSensitivity={20}
+                glowRadius={20}
+                glowIntensity={0.5}
+                coneSpread={30}
+                className="absolute inset-0 h-full w-full"
+              >
+                <img
+                  src="/images/hero.png"
+                  alt="Rozel O. Ramos, Digital Systems Architect"
+                  className="flex-1 min-h-0 w-full h-full object-cover object-center mix-blend-luminosity group-hover:mix-blend-normal transition-all duration-500"
+                  loading="eager"
+                />
+              </BorderGlow>
+            </div>
+            <img
+              src="/images/hero.png"
+              alt="Rozel O. Ramos, Digital Systems Architect"
+              className="sm:hidden block w-full h-full object-cover object-center"
+              loading="eager"
+            />
+            <div className="absolute inset-x-0 bottom-0 top-0 bg-[#3E3025]/15 sm:bg-[#3E3025]/30 shadow-2xl shadow-black/40 pointer-events-none" />
+            <div className="absolute inset-0 bg-gradient-to-t from-[#171614] via-transparent to-transparent opacity-0 sm:opacity-100 group-hover:opacity-0 transition-opacity duration-500 pointer-events-none" />
+            <div className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-[#171614] to-transparent opacity-0 sm:opacity-100 group-hover:opacity-0 transition-opacity duration-500 pointer-events-none" />
           </motion.div>
         </div>
       </motion.div>
@@ -665,26 +694,33 @@ function HeroSection() {
 }
 
 function AboutSection() {
+  const imageWrapRef = useRef<HTMLDivElement>(null);
+
+  const { scrollYProgress } = useScroll({
+    target: imageWrapRef,
+    offset: ["start end", "end start"],
+  });
+
+  const imageX = useTransform(scrollYProgress, [0, 1], ["0%", "-20%"]);
+
   return (
     <section id="about" className="relative bg-[#1c1a17] overflow-hidden">
-      {/* Portrait — positioned behind text, floating right */}
+      {/* Portrait — above text on mobile, floating right on desktop */}
       <motion.div
-        initial={{ opacity: 0, x: 40 }}
-        whileInView={{ opacity: 1, x: 0 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.7, delay: 0.15, ease: "easeOut" }}
-        className="absolute right-0 top-0 bottom-0 flex items-end justify-end opacity-30 md:opacity-100"
+        ref={imageWrapRef}
+        style={{ x: imageX }}
+        className="relative w-full md:absolute md:right-0 md:top-0 md:bottom-0 md:w-auto flex items-end justify-center md:justify-end md:opacity-100"
       >
         <img
           src="/images/about.png"
           alt="Rozel O. Ramos — About"
-          className="h-[60vh] w-auto object-contain object-bottom md:h-[100vh] lg:h-[110vh] -translate-x-[5%]"
+          className="h-[50vh] w-full object-cover object-top md:h-auto md:w-auto md:object-contain md:object-bottom md:max-h-[100vh] lg:max-h-[110vh]"
           loading="lazy"
         />
       </motion.div>
 
-      {/* Text — floats on top of the image */}
-      <div className="relative z-10 mx-auto max-w-[1600px] px-4 py-16 lg:h-screen lg:px-6 lg:py-0">
+      {/* Text — below image on mobile, floats on top on desktop */}
+      <div className="relative z-10 mx-auto max-w-[1600px] px-4 py-8 md:py-16 lg:h-screen lg:px-6 lg:py-0">
         <div className="flex h-full flex-col justify-center">
           <motion.p
             initial={{ opacity: 0, y: 20 }}
@@ -696,15 +732,16 @@ function AboutSection() {
             Web Dev
           </motion.p>
 
-          <motion.h2
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: 0.1, ease: "easeOut" }}
-            className="mt-4 font-[family-name:var(--font-bebas)] text-[clamp(7rem,22vw,20rem)] font-bold uppercase leading-[0.85] text-[#F5F2EE] sm:whitespace-nowrap"
+          <ScrollFloat
+            animationDuration={1}
+            ease="back.inOut(2)"
+            scrollStart="center bottom+=50%"
+            scrollEnd="bottom bottom-=40%"
+            stagger={0.03}
+            containerClassName="mt-4 font-[family-name:var(--font-bebas)] text-[clamp(7rem,22vw,20rem)] font-bold uppercase leading-[0.85] text-[#F5F2EE] sm:whitespace-nowrap"
           >
             About Me
-          </motion.h2>
+          </ScrollFloat>
 
           <motion.div
             initial={{ opacity: 0, y: 20 }}

@@ -4,30 +4,35 @@ import type React from "react"
 
 import { useState, useEffect, useRef } from "react"
 import { motion, AnimatePresence, useMotionValue, useSpring, useTransform } from "framer-motion"
+import { LinkPreview } from "@/components/ui/link-preview"
 
 const testimonials = [
   {
-    quote: "Rozel helped us replace repetitive manual updates with a cleaner workflow. Our team now knows exactly where each lead stands.",
-    author: "Operations Lead",
-    role: "Process Optimization",
-    company: "Consulting Business",
+    quote: "100/10 sa pag creat ng portfolio. Super ganda and will be helpful for clients!! 🩵",
+    author: "Maiden Macasaet",
+    role: "Client",
+    company: "Portfolio Review",
+    image: "/images/test.png",
   },
   {
-    quote: "The biggest difference was efficiency. We saved hours every week and created a smoother customer onboarding experience.",
-    author: "Founder",
-    role: "Business Strategy",
-    company: "Service Brand",
+    quote: "Very approachable and professional. Sir Ramos took time to understand my background and my skills, resulting in a very organized presentation of my work. His work will definitely help me in finding potential clients. Thank You, Sir!",
+    author: "Deen Hazel Maralit",
+    role: "Client",
+    company: "Portfolio Review",
+    image: "/images/test1.png",
   },
   {
-    quote: "He approached our website and CRM as one business system, not separate tasks. That changed how we manage growth.",
-    author: "Managing Partner",
-    role: "Digital Transformation",
-    company: "Boutique Agency",
+    quote: "Magaling si kuya gumawa ng portfolio ang bilis lang nya nagawa and nakuha nya yung gusto ko plus unli revision pa saknya hehe",
+    author: "Justin Slvdr",
+    role: "Client",
+    company: "Portfolio Review",
+    image: "/images/test2.png",
   },
 ]
 
 export function Testimonial() {
   const [activeIndex, setActiveIndex] = useState(0)
+  const [isPaused, setIsPaused] = useState(false)
   const containerRef = useRef<HTMLDivElement>(null)
 
   const mouseX = useMotionValue(0)
@@ -54,14 +59,19 @@ export function Testimonial() {
   const goPrev = () => setActiveIndex((prev) => (prev - 1 + testimonials.length) % testimonials.length)
 
   useEffect(() => {
+    if (isPaused) return
     const timer = setInterval(goNext, 6000)
     return () => clearInterval(timer)
-  }, [])
+  }, [isPaused])
 
   const current = testimonials[activeIndex]
 
   return (
-    <section className="border-t border-[rgba(245,242,238,0.08)] bg-[#1c1a17] pt-28 pb-0 overflow-hidden">
+    <section
+      className="border-t border-[rgba(245,242,238,0.08)] bg-[#1c1a17] pt-28 pb-0 overflow-hidden"
+      onMouseEnter={() => setIsPaused(true)}
+      onMouseLeave={() => setIsPaused(false)}
+    >
       <div ref={containerRef} className="relative w-full max-w-6xl mx-auto px-5 lg:px-8" onMouseMove={handleMouseMove}>
         {/* Oversized index number */}
         <motion.div
@@ -160,7 +170,14 @@ export function Testimonial() {
                         },
                       }}
                     >
-                      {word}
+                      <LinkPreview
+                        url="https://rozelramos.vercel.app"
+                        isStatic
+                        imageSrc={current.image ?? "/images/hero.png"}
+                        className="text-inherit hover:underline decoration-1 underline-offset-4 decoration-[#A78873]/40"
+                      >
+                        {word}
+                      </LinkPreview>
                     </motion.span>
                   ))}
                 </motion.blockquote>
@@ -251,6 +268,24 @@ export function Testimonial() {
                 </motion.button>
               </div>
             </div>
+
+            {/* Leave a Review button */}
+            <motion.div
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.6 }}
+              className="mt-8"
+            >
+              <a
+                href="https://www.facebook.com/CodeVisionPH/reviews"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="cursor-target group inline-flex items-center gap-2 border border-[#A78873] px-5 py-3 text-xs font-medium uppercase tracking-[0.15em] text-[#F5F2EE] transition hover:bg-[#A78873] hover:text-[#171614]"
+              >
+                Leave a Review
+                <svg className="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}><path strokeLinecap="round" strokeLinejoin="round" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" /></svg>
+              </a>
+            </motion.div>
           </div>
         </div>
       </div>
