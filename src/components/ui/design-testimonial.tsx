@@ -28,6 +28,13 @@ const testimonials = [
     company: "Portfolio Review",
     image: "/images/test2.png",
   },
+  {
+    quote: "If you are aspirant freelancer having hard time to create Portfolio Website . This is man is approachable and friendly package . Thank you to you bro",
+    author: "Clark AJ Bactul",
+    role: "Client",
+    company: "Portfolio Review",
+    image: "/images/test3.png",
+  },
 ]
 
 export function Testimonial() {

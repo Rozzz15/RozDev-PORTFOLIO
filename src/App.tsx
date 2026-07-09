@@ -405,6 +405,25 @@ const projects = [
       "https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?w=800&h=500&fit=crop",
   },
   {
+    title: "Wedding Invitation",
+    description:
+      "A complete wedding invitation website featuring elegant design, gallery, and event details.",
+    url: "https://webweddinginvitation.netlify.app/",
+    category: "Web Invitation",
+    tags: ["Wedding", "Invitation", "Web Design", "Gallery"],
+    image: "/images/wed.png",
+    gallery: [
+      "/images/wed.png",
+      "/images/wed1.png",
+      "/images/wed2.png",
+      "/images/wed3.png",
+      "/images/wed4.png",
+      "/images/wed5.png",
+      "/images/wed6.png",
+    ],
+    video: "/videos/wed.mp4",
+  },
+  {
     title: "Duyanan Restaurant Website",
     description:
       "A complete restaurant website featuring menu showcases, gallery, online presence, and brand identity for Duyanan Restaurant.",
@@ -488,6 +507,56 @@ const projects = [
     tags: ["POS", "UI Design", "Graphics", "Retail"],
     image: "",
     video: "/videos/EyirPOS.mp4",
+  },
+  {
+    title: "Hanna's Coffee Shop Menu",
+    description:
+      "A creatively designed menu for Hanna's Coffee Shop, featuring branding and visual identity.",
+    url: "#",
+    category: "Graphics Design",
+    tags: ["Menu Design", "Branding", "Coffee Shop", "Graphic Design"],
+    image: "/images/grap.png",
+    gallery: ["/images/grap.png"],
+  },
+  {
+    title: "YNA's DRINK Cloud Shake Poster",
+    description:
+      "A creatively designed poster for YNA's DRINK Cloud Shake, featuring branding and visual identity.",
+    url: "#",
+    category: "Graphics Design",
+    tags: ["Poster Design", "Branding", "Beverage", "Graphic Design"],
+    image: "/images/grap1.png",
+    gallery: ["/images/grap1.png"],
+  },
+  {
+    title: "YNA's DRINK Ice Tea Poster",
+    description:
+      "A creatively designed poster for YNA's DRINK Ice Tea, featuring branding and visual identity.",
+    url: "#",
+    category: "Graphics Design",
+    tags: ["Poster Design", "Branding", "Beverage", "Graphic Design"],
+    image: "/images/grap2.png",
+    gallery: ["/images/grap2.png"],
+  },
+  {
+    title: "Drivelux CARS Car For Rent Poster",
+    description:
+      "A creatively designed poster for Drivelux CARS car rental service, featuring branding and visual identity.",
+    url: "#",
+    category: "Graphics Design",
+    tags: ["Poster Design", "Branding", "Car Rental", "Graphic Design"],
+    image: "/images/grap3.png",
+    gallery: ["/images/grap3.png"],
+  },
+  {
+    title: "Drivelux CARS Twitch Stream Package",
+    description:
+      "A custom Twitch streaming package for Drivelux CARS, featuring overlays, panels, and brand identity.",
+    url: "#",
+    category: "Graphics Design",
+    tags: ["Twitch", "Stream Package", "Overlay Design", "Graphic Design"],
+    image: "/images/grap4.png",
+    gallery: ["/images/grap4.png"],
   },
   {
     title: "Dana Fashion",
@@ -931,7 +1000,7 @@ function ProjectsSection() {
                     alt={selectedProject.title}
                     draggable={false}
                     onContextMenu={(e) => e.preventDefault()}
-                    className="w-full aspect-[16/9] object-cover"
+                    className="w-full max-h-[80vh] object-contain bg-black"
                   />
                 )}
                 <button

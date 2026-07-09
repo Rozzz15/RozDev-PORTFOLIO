@@ -128,7 +128,7 @@ export const LinkPreview = ({
                   href={url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="block p-1 bg-white border-2 border-transparent shadow rounded-xl hover:border-neutral-200 dark:hover:border-neutral-800"
+                  className="block p-0 bg-transparent border-0 shadow rounded-xl"
                   style={{ fontSize: 0 }}
                 >
                   <img
