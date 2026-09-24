@@ -58,7 +58,7 @@ export const HeroParallax = ({
   return (
     <div
       ref={ref}
-      className={`h-full overflow-hidden antialiased relative flex flex-col self-auto [perspective:1000px] [transform-style:preserve-3d] bg-[#171614] ${className}`}
+      className={`h-full overflow-hidden antialiased relative flex flex-col self-auto [perspective:1000px] [transform-style:preserve-3d] bg-[#171614]/70 ${className}`}
     >
       <motion.div
         style={{
@@ -133,6 +133,8 @@ export const ProductCard = ({
           src={product.thumbnail}
           className="object-cover object-left-top absolute h-full w-full inset-0"
           alt={product.title}
+          loading="lazy"
+          decoding="async"
         />
       </a>
       <div className="absolute inset-0 h-full w-full opacity-0 group-hover/product:opacity-80 bg-black pointer-events-none" />

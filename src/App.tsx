@@ -4,6 +4,8 @@ import { ArrowUpRight, ArrowUp, X, Mail, Phone, MapPin, Send, CheckCircle, Alert
 import KineticNavigation from "@/components/ui/kinetic-navigation";
 import TargetCursor from "@/components/ui/target-cursor";
 import { HeroParallax } from "@/components/ui/hero-parallax";
+import Ferrofluid from "@/components/ui/ferrofluid";
+import { LazyAutoplayVideo } from "@/components/ui/lazy-autoplay-video";
 import { ChatbotModal } from "@/components/ui/chatbot-modal";
 import { TextReveal } from "@/components/ui/cascade-text";
 import { WaveText } from "@/components/ui/wave-text";
@@ -11,7 +13,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { FloatingPaths } from "@/components/ui/background-paths";
 import BorderGlow from "@/components/ui/border-glow";
-import TubesCursor from "@/components/ui/tubes-cursor";
+
 import { Footer } from "@/components/ui/modem-animated-footer";
 import ScrollFloat from "@/components/ui/ScrollFloat";
 import { Testimonial } from "@/components/ui/design-testimonial";
@@ -22,7 +24,7 @@ const categories = [
   "Web Portfolio",
   "Web Invitation",
   "Mobile App",
-  "Custom Games",
+  "Email Design",
   "Graphics Design",
   "Video Editing",
 ];
@@ -405,6 +407,38 @@ const projects = [
       "https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?w=800&h=500&fit=crop",
   },
   {
+    title: "MILKY POS",
+    description:
+      "A mobile point-of-sale app for managing products, inventory, orders, and sales transactions with a clean and fast interface.",
+    url: "#",
+    category: "Mobile App",
+    tags: ["POS", "Mobile App", "Retail", "Sales"],
+    image: "/images/milkyPOS%20(1).png",
+    gallery: [
+      "/images/milkyPOS%20(1).png",
+      "/images/milkyPOS%20(2).png",
+      "/images/milkyPOS%20(3).png",
+      "/images/milkyPOS%20(4).png",
+      "/images/milkyPOS%20(5).png",
+      "/images/milkyPOS%20(6).png",
+      "/images/milkyPOS%20(7).png",
+      "/images/milkyPOS%20(8).png",
+      "/images/milkyPOS%20(9).png",
+      "/images/milkyPOS%20(10).png",
+      "/images/milkyPOS%20(11).png",
+      "/images/milkyPOS%20(12).png",
+      "/images/milkyPOS%20(13).png",
+      "/images/milkyPOS%20(14).png",
+      "/images/milkyPOS%20(15).png",
+      "/images/milkyPOS%20(16).png",
+      "/images/milkyPOS%20(17).png",
+      "/images/milkyPOS%20(18).png",
+      "/images/milkyPOS%20(19).png",
+      "/images/milkyPOS%20(20).png",
+      "/images/milkyPOS%20(21).png",
+    ],
+  },
+  {
     title: "Wedding Invitation",
     description:
       "A complete wedding invitation website featuring elegant design, gallery, and event details.",
@@ -576,6 +610,43 @@ const projects = [
     ],
     video: "/videos/dana.mp4",
   },
+  {
+    title: "Random Clothing",
+    description:
+      "A modern fashion e-commerce website featuring curated collections, style lookbooks, and brand identity for Random Clothing.",
+    url: "https://randomclothingwebsite.netlify.app/",
+    category: "Websites",
+    tags: ["Fashion", "Web Design", "Branding", "Gallery"],
+    image: "/images/fas.png",
+    gallery: [
+      "/images/fas.png",
+      "/images/fas1.png",
+      "/images/fas2.png",
+      "/images/fas3.png",
+      "/images/fas4.png",
+    ],
+    video: "/videos/fas.mp4",
+  },
+  {
+    title: "Email Design Campaign",
+    description:
+      "A professionally crafted email design for marketing campaigns, featuring responsive layouts, engaging visuals, and clear call-to-actions.",
+    url: "#",
+    category: "Email Design",
+    tags: ["Email", "Marketing", "Responsive", "Campaign"],
+    image: "",
+    video: "/videos/email.mp4",
+  },
+  {
+    title: "Email Newsletter Design",
+    description:
+      "A clean and modern email newsletter design with branded visuals, structured content sections, and mobile-friendly formatting.",
+    url: "#",
+    category: "Email Design",
+    tags: ["Email", "Newsletter", "Branding", "Design"],
+    image: "",
+    video: "/videos/email1.mp4",
+  },
 ];
 
 const experience = [
@@ -625,7 +696,11 @@ const heroProducts = [
   { title: "Patrick David", link: "https://patrickdavidrosario.netlify.app/", thumbnail: "/images/pat1.png" },
   { title: "Vincent Carl", link: "https://vincentcarlmatucabe.netlify.app/", thumbnail: "/images/vin1.png" },
   { title: "Dana Fashion", link: "https://danafashion.netlify.app/", thumbnail: "/images/da.png" },
+  { title: "Random Clothing", link: "https://randomclothingwebsite.netlify.app/", thumbnail: "/images/fas.png" },
 ];
+
+// Stable module-level reference so the Ferrofluid effect isn't recreated on every render
+const heroFerrofluidColors = ["#A78873", "#C89B6D", "#E5C9A8"];
 
 const fadeUpVariants = {
   hidden: { opacity: 0, y: 28 },
@@ -673,7 +748,26 @@ function HeroSection() {
 
   return (
     <section id="home" className="relative h-[200vh] md:h-[300vh]">
-      <div className="absolute inset-0 z-0">
+      {/* Ferrofluid glowing behind the product gallery */}
+      <div className="absolute inset-0 z-0 pointer-events-none">
+        <Ferrofluid
+          colors={heroFerrofluidColors}
+          speed={0.5}
+          scale={1.4}
+          turbulence={0.9}
+          fluidity={0.1}
+          rimWidth={0.22}
+          sharpness={2.5}
+          shimmer={1.3}
+          glow={1.6}
+          flowDirection="up"
+          opacity={0.9}
+          mouseInteraction={false}
+          dpr={1}
+          renderScale={0.4}
+        />
+      </div>
+      <div className="absolute inset-0 z-[1]">
         <HeroParallax products={heroProducts} />
       </div>
 
@@ -902,21 +996,17 @@ function ProjectsSection() {
               >
                 <div className="overflow-hidden bg-[rgba(245,242,238,0.02)]">
                   {project.video ? (
-                    <video
+                    <LazyAutoplayVideo
                       src={project.video}
-                      autoPlay
-                      loop
-                      muted
-                      playsInline
-                      preload="auto"
-                      draggable={false}
-                      onContextMenu={(e) => e.preventDefault()}
+                      poster={project.image || undefined}
                       className="aspect-[4/3] w-full object-cover transition duration-700 group-hover:scale-105"
                     />
                   ) : (
                     <img
                       src={project.image}
                       alt={project.title}
+                      loading="lazy"
+                      decoding="async"
                       draggable={false}
                       onContextMenu={(e) => e.preventDefault()}
                       className="aspect-[4/3] w-full object-cover transition duration-700 group-hover:scale-105"
@@ -1071,6 +1161,8 @@ function ProjectsSection() {
                           src={img}
                           alt={`${selectedProject.title} ${idx + 1}`}
                           onClick={() => setLightboxImg(img)}
+                          loading="lazy"
+                          decoding="async"
                           draggable={false}
                           onContextMenu={(e) => e.preventDefault()}
                           className="w-full aspect-[4/3] object-cover bg-[rgba(245,242,238,0.03)] transition duration-300 hover:opacity-90 cursor-pointer"
@@ -1191,11 +1283,7 @@ function WaveDivider({
 
 function ExperienceSection() {
   return (
-    <section id="experience" className="relative overflow-hidden w-full py-28">
-      <div id="tubes-container" className="absolute inset-0 z-0 pointer-events-none">
-        <TubesCursor />
-      </div>
-
+    <section id="experience" className="relative w-full py-28">
       <div className="mx-auto grid max-w-7xl gap-14 px-5 lg:grid-cols-[0.7fr_1.3fr] lg:px-8">
         <div className="relative z-10">
           <SectionLabel>Experience</SectionLabel>
@@ -1598,28 +1686,28 @@ function BackToTop() {
   );
 }
 
-const welcomeMessages = [
-  "Tuloy po kayo!",
-  "Please come in",
-  "どうぞお入りください",
-  "Pasukan",
-  "Pase, por favor",
-];
-
 function SplashScreen() {
-  const [index, setIndex] = useState(0);
+  const [progress, setProgress] = useState(0);
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      setIndex((i) => (i + 1) % welcomeMessages.length);
-    }, 600);
-    return () => clearInterval(interval);
+    let frame: number;
+    const start = performance.now();
+    const animate = (now: number) => {
+      const elapsed = now - start;
+      const p = Math.min((elapsed / 3000) * 100, 100);
+      setProgress(Math.floor(p));
+      if (p < 100) {
+        frame = requestAnimationFrame(animate);
+      }
+    };
+    frame = requestAnimationFrame(animate);
+    return () => cancelAnimationFrame(frame);
   }, []);
 
   return (
     <motion.div
-      exit={{ opacity: 0 }}
-      transition={{ duration: 0.6 }}
+      exit={{ y: "-100vh", opacity: 0 }}
+      transition={{ duration: 1.2, ease: [0.25, 0.46, 0.45, 0.94] }}
       className="fixed inset-0 z-[100] grid place-items-center bg-[#171614]"
     >
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(116,93,75,0.15),transparent_60%)]" />
@@ -1636,9 +1724,6 @@ function SplashScreen() {
           transition={{ duration: 0.8, delay: 0.2 }}
           className="mb-8"
         >
-          <p className="text-xs uppercase tracking-[0.5em] text-[rgba(245,242,238,0.4)] mb-4">
-            Welcome to my portfolio
-          </p>
         </motion.div>
 
         <motion.div
@@ -1653,42 +1738,25 @@ function SplashScreen() {
             Digital Systems Architect
           </p>
         </motion.div>
+      </motion.div>
 
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.8, delay: 0.8 }}
-          className="mt-10 h-8 overflow-hidden"
-        >
-          <AnimatePresence mode="wait">
-            <motion.p
-              key={index}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -20 }}
-              transition={{ duration: 0.3 }}
-              className="text-lg text-[rgba(245,242,238,0.6)] md:text-xl"
-            >
-              {welcomeMessages[index]}
-            </motion.p>
-          </AnimatePresence>
-        </motion.div>
-
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.8, delay: 1 }}
-          className="mt-10 flex justify-center"
-        >
-          <div className="h-px w-32 overflow-hidden bg-[rgba(245,242,238,0.12)]">
-            <motion.div
-              className="h-full bg-gradient-to-r from-transparent via-[#A78873] to-transparent"
-              initial={{ x: "-100%" }}
-              animate={{ x: "100%" }}
-              transition={{ duration: 1.2, repeat: Infinity, ease: "easeInOut" }}
-            />
-          </div>
-        </motion.div>
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.8, delay: 0.6 }}
+        className="absolute bottom-12 left-1/2 -translate-x-1/2 flex flex-col items-center gap-3"
+      >
+        <div className="text-2xl font-medium text-[#F5F2EE] tabular-nums md:text-4xl">
+          {progress}%
+        </div>
+        <div className="h-px w-32 overflow-hidden bg-[rgba(245,242,238,0.12)]">
+          <motion.div
+            className="h-full bg-gradient-to-r from-transparent via-[#A78873] to-transparent"
+            initial={{ x: "-100%" }}
+            animate={{ x: "100%" }}
+            transition={{ duration: 1.2, repeat: Infinity, ease: "easeInOut" }}
+          />
+        </div>
       </motion.div>
     </motion.div>
   );
@@ -1729,7 +1797,7 @@ export default function App() {
       setShowSplash(false);
       return;
     }
-    const timer = window.setTimeout(() => setShowSplash(false), 600);
+    const timer = window.setTimeout(() => setShowSplash(false), 3000);
     return () => window.clearTimeout(timer);
   }, []);
 
@@ -1750,9 +1818,7 @@ export default function App() {
         <HeroSection />
         <AboutSection />
         <ProjectsSection />
-        <WaveDivider fill="#000000" baseFill="#1c1a17" />
         <ExperienceSection />
-        <WaveDivider fill="#1c1a17" baseFill="#000000" />
         <Testimonial />
         <ContactSection />
       </main>

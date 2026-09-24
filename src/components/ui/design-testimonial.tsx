@@ -35,12 +35,34 @@ const testimonials = [
     company: "Portfolio Review",
     image: "/images/test3.png",
   },
+  {
+    quote: "I highly recommend Rozel for his exceptional professionalism, attention to detail, and genuine commitment to bringing his clients' visions to life. Throughout the entire process, he was incredibly attentive to my requests and took the time to understand the image and direction I wanted for my portfolio. What I particularly appreciated was his thoughtful approach to collaboration. He offered valuable suggestions and recommendations in a way that felt respectful of my vision, always ensuring that the final outcome remained true to what I wanted while elevating it even further. His ability to balance creativity with professionalism made the entire experience seamless and enjoyable. I am genuinely grateful for the care, patience, and dedication he put into the work. If you are looking for someone who is professional, collaborative, detail-oriented, and truly invested in delivering an exceptional result, I would wholeheartedly recommend Rozel.",
+    author: "Jedidiuh Ibanez",
+    role: "Client",
+    company: "Portfolio Review",
+    image: "/images/ll.png",
+  },
+  {
+    quote: "Rozel Ramos helps me a lot. Thank you so much for creating such a beautiful and professional portfolio. I like the visual layout and consistency. Sobrang naapreciate ko din yung time kasi 1 day nya lang nagawa at natapos na agad, yung effort and creativity since nagpa customized ako ng gusto kong layout at nagawa nya ng perfect.\ud83d\udc4fI am very grateful for your amazing work and support. Overall, it's an impressive portfolio. Galing\ud83d\udc4f",
+    author: "LhabLab Felasol Enojo",
+    role: "Client",
+    company: "Portfolio Review",
+    image: "/images/oo.png",
+  },
+  {
+    quote: "I want to express my deepest gratitude to you, Rozel, for accommodating every single requests. Your dedication and passion for your work are truly incredible. working late into the night just to make sure everything turned out perfectly. Even with all the revisions, you never left me hanging. You are a true professional, highly recommended, and a genuinely trusted web designer! really looking forward to working with you again on future projects. Kudos on the amazing work! \ud83d\udc4f\ud83c\udf89 The wedding web invites turned out so beautiful and polished. Thank you for ur great work!",
+    author: "Regielyn Mic",
+    role: "Client",
+    company: "Portfolio Review",
+    image: "/images/ooo.png",
+  },
 ]
 
 export function Testimonial() {
   const [activeIndex, setActiveIndex] = useState(0)
   const [isPaused, setIsPaused] = useState(false)
   const containerRef = useRef<HTMLDivElement>(null)
+  const avatarsScrollRef = useRef<HTMLDivElement>(null)
 
   const mouseX = useMotionValue(0)
   const mouseY = useMotionValue(0)
@@ -65,6 +87,20 @@ export function Testimonial() {
   const goNext = () => setActiveIndex((prev) => (prev + 1) % testimonials.length)
   const goPrev = () => setActiveIndex((prev) => (prev - 1 + testimonials.length) % testimonials.length)
 
+  const scrollToAvatar = (idx: number) => {
+    setActiveIndex(idx)
+    const el = avatarsScrollRef.current
+    if (el) {
+      const item = el.children[idx] as HTMLElement
+      if (item) {
+        const containerRect = el.getBoundingClientRect()
+        const itemRect = item.getBoundingClientRect()
+        const offset = itemRect.left - containerRect.left - containerRect.width / 2 + itemRect.width / 2
+        el.scrollTo({ left: offset, behavior: "smooth" })
+      }
+    }
+  }
+
   useEffect(() => {
     if (isPaused) return
     const timer = setInterval(goNext, 6000)
@@ -75,14 +111,14 @@ export function Testimonial() {
 
   return (
     <section
-      className="border-t border-[rgba(245,242,238,0.08)] bg-[#1c1a17] pt-28 pb-0 overflow-hidden"
+        className="border-t border-[rgba(245,242,238,0.08)] bg-[#1c1a17] pt-28 pb-12 overflow-hidden"
       onMouseEnter={() => setIsPaused(true)}
       onMouseLeave={() => setIsPaused(false)}
     >
       <div ref={containerRef} className="relative w-full max-w-6xl mx-auto px-5 lg:px-8" onMouseMove={handleMouseMove}>
         {/* Oversized index number */}
         <motion.div
-          className="absolute -left-8 top-1/2 -translate-y-1/2 text-[12rem] sm:text-[20rem] md:text-[28rem] font-bold text-[#A78873]/[0.04] select-none pointer-events-none leading-none tracking-tighter"
+          className="absolute -left-80 top-1/2 -translate-y-1/2 w-[10ch] text-[8rem] sm:text-[12rem] md:text-[16rem] font-bold text-[#A78873]/[0.04] select-none pointer-events-none leading-none tracking-tighter"
           style={{ x: numberX, y: numberY }}
         >
           <AnimatePresence mode="wait">
@@ -126,7 +162,7 @@ export function Testimonial() {
           </div>
 
           {/* Center - main content */}
-          <div className="flex-1 md:pl-16 py-12">
+          <div className="flex-1 md:pl-16 py-12 cursor-pointer" onClick={() => window.open("https://www.facebook.com/CodeVisionPH/reviews", "_blank")}>
             {/* Company badge */}
             <AnimatePresence mode="wait">
               <motion.div
@@ -144,8 +180,33 @@ export function Testimonial() {
               </motion.div>
             </AnimatePresence>
 
+            {/* All testimonial avatars */}
+            <div
+              ref={avatarsScrollRef}
+              className="mb-10 flex items-center gap-3 overflow-x-auto scroll-smooth scrollbar-thin scrollbar-thumb-[#A78873]/20 scrollbar-track-transparent pb-1"
+            >
+              {testimonials.map((t, idx) => (
+                <motion.button
+                  key={t.author}
+                  onClick={() => scrollToAvatar(idx)}
+                   className={`relative flex-shrink-0 border-2 transition-all ${
+                     idx === activeIndex
+                       ? "border-[#A78873] w-40 h-40 rounded-full"
+                       : "border-[rgba(245,242,238,0.12)] w-32 h-32 rounded-full hover:border-[#A78873]/40"
+                   }`}
+                  whileTap={{ scale: 0.95 }}
+                >
+                  <img
+                    src={t.image ?? "/images/hero.png"}
+                    alt={t.author}
+                    className="w-full h-full object-cover"
+                  />
+                </motion.button>
+              ))}
+            </div>
+
             {/* Quote with character reveal */}
-            <div className="relative mb-12 min-h-[140px]">
+            <div className="relative mb-12 min-h-[140px] max-h-[340px] overflow-y-auto scrollbar-thin scrollbar-thumb-[#A78873]/20 scrollbar-track-transparent">
               <AnimatePresence mode="wait">
                 <motion.blockquote
                   key={activeIndex}
@@ -219,7 +280,7 @@ export function Testimonial() {
               {/* Navigation */}
               <div className="flex items-center gap-4">
                 <motion.button
-                  onClick={goPrev}
+                  onClick={(e) => { e.stopPropagation(); goPrev(); }}
                   className="group relative w-12 h-12 rounded-full border border-[rgba(245,242,238,0.15)] flex items-center justify-center overflow-hidden hover:border-[#A78873] transition-colors"
                   whileTap={{ scale: 0.95 }}
                 >
@@ -247,7 +308,7 @@ export function Testimonial() {
                 </motion.button>
 
                 <motion.button
-                  onClick={goNext}
+                  onClick={(e) => { e.stopPropagation(); goNext(); }}
                   className="group relative w-12 h-12 rounded-full border border-[rgba(245,242,238,0.15)] flex items-center justify-center overflow-hidden hover:border-[#A78873] transition-colors"
                   whileTap={{ scale: 0.95 }}
                 >
@@ -311,30 +372,6 @@ export function Testimonial() {
             ))}
           </motion.div>
         </div>
-
-      {/* Animated wave divider */}
-      <div className="relative w-full overflow-hidden leading-[0] -mb-[2px]">
-        <svg
-          className="block w-full h-[60px] sm:h-[80px] md:h-[100px]"
-          viewBox="0 0 1440 122"
-          preserveAspectRatio="none"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <rect width="1440" height="122" fill="#1c1a17" />
-          <motion.path
-            animate={{
-              d: [
-                "M0 47.40849C120 97.40849 240 2.59151 360 47.40849S600 97.40849 720 47.40849 960 2.59151 1080 47.40849 1320 97.40849 1440 47.40849V122H0Z",
-                "M0 37.40849C120 87.40849 240 12.59151 360 37.40849S600 87.40849 720 37.40849 960 12.59151 1080 37.40849 1320 87.40849 1440 37.40849V122H0Z",
-                "M0 57.40849C120 107.40849 240 2.59151 360 57.40849S600 107.40849 720 57.40849 960 2.59151 1080 57.40849 1320 107.40849 1440 57.40849V122H0Z",
-                "M0 47.40849C120 97.40849 240 2.59151 360 47.40849S600 97.40849 720 47.40849 960 2.59151 1080 47.40849 1320 97.40849 1440 47.40849V122H0Z",
-              ]
-            }}
-            transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-            fill="#171614"
-          />
-        </svg>
-      </div>
 
     </section>
   )
