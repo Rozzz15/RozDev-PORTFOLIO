@@ -397,16 +397,6 @@ const projects = [
     video: "/videos/vincent.mp4",
   },
   {
-    title: "Customer Journey Automation",
-    description:
-      "Mapped and automated the entire customer journey from first touchpoint to repeat engagement and retention.",
-    url: "#",
-    category: "Mobile App",
-    tags: ["Customer Journey", "CRM", "Email Automation"],
-    image:
-      "https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?w=800&h=500&fit=crop",
-  },
-  {
     title: "MILKY POS",
     description:
       "A mobile point-of-sale app for managing products, inventory, orders, and sales transactions with a clean and fast interface.",
