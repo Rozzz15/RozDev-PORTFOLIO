@@ -37,9 +37,9 @@ const knowledgeBase: { keywords: string[]; response: string }[] = [
       "You can reach Rozel through:\n\n📧 **Email:** rozelramos17@gmail.com\n📞 **Phone:** +63 916 621 9195\n📍 **Location:** Lopez, Quezon, Philippines\n\nYou can also book a discovery call via Calendly or send a message through the contact form on this site!",
   },
   {
-    keywords: ["experience", "background", "work history", "career", "past", "previous"],
+    keywords: ["experience", "background", "work history", "career", "past", "previous", "legion", "towson", "wix", "seo", "freelance"],
     response:
-      "Rozel's professional journey:\n\n💼 **Freelance Web & Mobile Developer** (2025 – Present)\nSolving operational problems through digital tools, websites, automations, and structured customer workflows.\n\n💬 **Online Chat Support / Sales Chatter** (2025 – 2026)\nBuilt customer experience discipline through live conversations, sales support, and response systems.\n\n📋 **ID Processing Staff / Admission Assistant Officer** (2022 – 2023)\nDeveloped systems thinking through administrative operations, documentation, and process accuracy.",
+      "Rozel's professional journey:\n\n💼 **Freelance Web & Mobile Developer** — Freelance Remote (April 2024 – Present)\nDeveloping responsive websites and portfolio projects, implementing automation for lead management, collaborating directly with clients on requirements and timelines, and providing post-launch support using HTML, CSS, JavaScript, and website builders.\n\n🔍 **Wix Website Developer & SEO Specialist** — Legion Pest Control, Singapore (Aug 2026 – Sept 2026)\nRedesigned and optimized the company website for a modern, mobile-friendly experience, and implemented on-page and local SEO strategies including keyword research, meta tags, headings, and content targeting for Singapore-based search visibility.\n\n🛠️ **Website Builder & SEO Page Builder** — Towson Web Design, Remote (July 2026 – Oct 2026)\nBuilding, customizing, and publishing up to 12 business websites daily on the Duda platform, managing SEO metadata and image alt text, refining content and heading hierarchy, and testing responsive layouts across desktop, tablet, and mobile.",
   },
   {
     keywords: ["process", "how work", "approach", "methodology", "how it works", "step"],

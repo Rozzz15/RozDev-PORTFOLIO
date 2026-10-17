@@ -642,21 +642,39 @@ const projects = [
 const experience = [
   {
     role: "Freelance Web & Mobile Developer",
-    dates: "2024 - Present",
-    focus:
-      "Solving operational problems through digital tools, websites, automations, and structured customer workflows.",
+    company: "Freelance Remote",
+    dates: "April 2024 – Present",
+    points: [
+      "Developed responsive websites and portfolio projects tailored to client business needs.",
+      "Implemented automation features to improve lead management and workflow efficiency.",
+      "Collaborated directly with clients regarding revisions, requirements, and project timelines.",
+      "Designed visually appealing and user-friendly websites focused on conversion.",
+      "Provided post-launch maintenance and technical support for completed projects.",
+      "Utilized modern web technologies including HTML, CSS, JavaScript, and website builders.",
+    ],
   },
   {
-    role: "Online Chat Support / Sales Chatter",
-    dates: "2025 - 2026",
-    focus:
-      "Built customer experience discipline through live conversations, sales support, response systems, and conversion awareness.",
+    role: "Wix Website Developer & SEO Specialist",
+    company: "Legion Pest Control — Singapore (Freelance Remote)",
+    dates: "Aug 2026 – Sept 2026",
+    points: [
+      "Redesigned and optimized the company website for a modern, mobile-friendly user experience.",
+      "Implemented on-page and local SEO strategies to improve search visibility in Singapore.",
+      "Conducted keyword research and optimized service pages, meta tags, headings, and website content.",
+      "Improved website structure and content targeting keywords such as “pest control services Singapore” and “pest control experts Singapore.”",
+    ],
   },
   {
-    role: "ID Processing Staff / Admission Assistant Officer",
-    dates: "2022 - 2023",
-    focus:
-      "Developed systems thinking through administrative operations, documentation, data handling, and process accuracy.",
+    role: "Website Builder & SEO Page Builder",
+    company: "Towson Web Design — Remote",
+    dates: "July 2026 – Oct 2026",
+    points: [
+      "Build, customize, and publish up to 12 business websites daily using the Duda platform, meeting productivity targets and project requirements.",
+      "Customize website layouts, typography, color schemes, images, spacing, and page structures to deliver professional, visually consistent websites.",
+      "Optimize websites for search engines by managing page-specific meta titles, meta descriptions, site metadata, and image alt text.",
+      "Improve website content through proofreading, reducing repetitive location-based keywords, refining heading hierarchy, and optimizing internal links to service pages.",
+      "Test and refine responsive layouts across desktop, tablet, and mobile views to ensure consistent presentation and usability across devices.",
+    ],
   },
 ];
 
@@ -1292,9 +1310,17 @@ function ExperienceSection() {
               <span className="absolute -left-[41px] top-1 h-4 w-4 border border-[#A78873] bg-[#171614]" />
               <p className="text-sm text-[#A78873]">{exp.dates}</p>
               <h3 className="mt-3 text-2xl font-semibold text-[#F5F2EE]">{exp.role}</h3>
-              <p className="mt-4 max-w-2xl leading-8 text-[rgba(245,242,238,0.68)]">
-                {exp.focus}
-              </p>
+              <p className="mt-1 text-sm text-[rgba(245,242,238,0.5)]">{exp.company}</p>
+              <ul className="mt-4 max-w-2xl space-y-3">
+                {exp.points.map((point) => (
+                  <li
+                    key={point}
+                    className="relative pl-5 leading-7 text-[rgba(245,242,238,0.68)] before:absolute before:left-0 before:top-3 before:h-1.5 before:w-1.5 before:bg-[#A78873]"
+                  >
+                    {point}
+                  </li>
+                ))}
+              </ul>
             </div>
           ))}
         </div>
@@ -1859,7 +1885,7 @@ export default function App() {
         ]}
         brandIcon={
           <img
-            src="/images/splash.png"
+            src="/images/splash.jpg"
             alt="Rozel O. Ramos"
             className="w-full h-full object-cover rounded-2xl"
           />
