@@ -13,6 +13,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { FloatingPaths } from "@/components/ui/background-paths";
 import BorderGlow from "@/components/ui/border-glow";
+import aboutContent from "../about.md?raw";
 
 import { Footer } from "@/components/ui/modem-animated-footer";
 import ScrollFloat from "@/components/ui/ScrollFloat";
@@ -805,7 +806,7 @@ function HeroSection() {
                 Schedule a Discovery Call
               </Button>
               <a
-                href="/pdf/Rozel Ramos CV.pdf"
+                href="/pdf/Rozel Ramos CV.pdf.pdf"
                 download
                 className="cursor-target group inline-flex items-center justify-center gap-3 border border-[rgba(245,242,238,0.18)] px-6 py-4 text-sm font-medium text-[#F5F2EE] transition duration-300 hover:border-[#A78873] hover:bg-[rgba(167,136,115,0.08)]"
               >
@@ -922,7 +923,7 @@ function AboutSection() {
             className="mt-8 max-w-[900px]"
           >
             <p className="text-lg leading-[1.6] text-justify text-[rgba(245,242,238,0.75)] lg:text-xl">
-              Virtual Assistant, Admissions Assistant, and Freelance Web Developer with 2+ years of professional experience supporting administrative operations, admissions services, and digital transformation projects. As a Freelance Web Developer since 2024, has successfully completed numerous client projects, delivering modern, responsive websites and professional portfolio solutions with a strong emphasis on performance, usability, and visual appeal. Proficient in admissions support, document and records management, data entry, email and calendar management, client communication, website development, mobile portfolio creation, and IT support. Combines technical expertise with exceptional organizational and problem-solving skills to consistently deliver efficient workflows, successful project outcomes, and high client satisfaction.
+              {aboutContent.trim()}
             </p>
           </motion.div>
         </div>
